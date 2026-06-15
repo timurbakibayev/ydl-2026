@@ -367,27 +367,90 @@ def draw_hud(screen, font, score, lives):
                             [(cx - 15, cy + 4), (cx + 15, cy + 4), (cx, cy + 22)])
 
 
-def spawn_chunk(start_x):
-    """Сгенерировать кусок уровня: платформа с монетками и иногда враг."""
-    platforms, coins, enemies = [], [], []
+def _coins_on_platform(p):
+    """Разложить монетки ровным рядком поверх платформы."""
+    coins = []
+    n = max(1, p.w // 40)
+    for i in range(n):
+        coins.append(Coin(p.x + 22 + i * 40, p.y - 26))
+    return coins
 
-    if random.random() < 0.5:
-        pw = random.randint(110, 190)
+
+def spawn_chunk(start_x):
+    """Сгенерировать кусок уровня. Случайно выбираем одну из «комнат»:
+    ступеньки, этажи-башня, мостик через пропасть, парящая платформа или
+    дуга монеток. Возвращает (platforms, coins, enemies, next_x)."""
+    platforms, coins, enemies = [], [], []
+    kind = random.choice([
+        "stairs", "stairs", "tower", "gap", "platform", "arc",
+    ])
+
+    if kind == "stairs":
+        # лесенка вверх (или вниз) из небольших ступенек
+        steps = random.randint(3, 4)
+        step_w = 64
+        step_h = 46
+        going_up = random.random() < 0.6
+        for i in range(steps):
+            level = i if going_up else (steps - 1 - i)
+            px = start_x + i * step_w
+            py = GROUND_Y - 40 - level * step_h
+            p = Platform(px, py, step_w)
+            platforms.append(p)
+            coins.append(Coin(px + step_w // 2, py - 26))
+        width_used = steps * step_w
+        if random.random() < 0.4:
+            enemies.append(Enemy(start_x + width_used + 20))
+        next_x = start_x + width_used + random.randint(80, 160)
+
+    elif kind == "tower":
+        # «этажи» — несколько платформ друг над другом со сдвигом
+        floors = random.randint(2, 3)
+        pw = random.randint(120, 160)
+        for i in range(floors):
+            shift = random.randint(-30, 30)
+            px = start_x + shift
+            py = GROUND_Y - 80 - i * 95
+            p = Platform(px, py, pw)
+            platforms.append(p)
+            coins += _coins_on_platform(p)
+        if random.random() < 0.5:
+            enemies.append(Enemy(start_x + random.randint(60, 180)))
+        next_x = start_x + pw + random.randint(160, 240)
+
+    elif kind == "gap":
+        # пропасть с маленькими «островками»-ступеньками для перепрыгивания
+        islands = random.randint(2, 3)
+        gap = 95
+        isl_w = 70
+        for i in range(islands):
+            px = start_x + i * (isl_w + gap)
+            py = GROUND_Y - random.randint(50, 110)
+            p = Platform(px, py, isl_w)
+            platforms.append(p)
+            coins.append(Coin(px + isl_w // 2, py - 26))
+        next_x = start_x + islands * (isl_w + gap) + random.randint(60, 140)
+
+    elif kind == "platform":
+        # одна широкая парящая платформа (как раньше)
+        pw = random.randint(120, 200)
         py = GROUND_Y - random.randint(90, 170)
-        platforms.append(Platform(start_x, py, pw))
-        n = pw // 40
-        for i in range(n):
-            coins.append(Coin(start_x + 20 + i * 40, py - 28))
-    else:
+        p = Platform(start_x, py, pw)
+        platforms.append(p)
+        coins += _coins_on_platform(p)
+        if random.random() < 0.5:
+            enemies.append(Enemy(start_x + random.randint(120, 240)))
+        next_x = start_x + random.randint(280, 360)
+
+    else:  # arc — дуга монеток над землёй (награда за прыжок)
         n = random.randint(3, 5)
         for i in range(n):
             arc = -abs((i - (n - 1) / 2)) * 22 + 70
             coins.append(Coin(start_x + 30 + i * 45, GROUND_Y - 60 - arc))
+        if random.random() < 0.6:
+            enemies.append(Enemy(start_x + random.randint(120, 240)))
+        next_x = start_x + random.randint(280, 360)
 
-    if random.random() < 0.55:
-        enemies.append(Enemy(start_x + random.randint(120, 240)))
-
-    next_x = start_x + random.randint(280, 380)
     return platforms, coins, enemies, next_x
 
 
