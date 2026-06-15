@@ -1,46 +1,62 @@
-# CLAUDE.md
+# work.ipynb — рабочий ноутбук лекции
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+## Контекст
+Это живая лекция по анализу данных (летняя школа YDL 2026, Неделя 1).
+Аудитория — новички, код выводится на проектор для ~20 студентов.
+Я копирую тебе вопрос/промпт → ты отвечаешь, обновляя `work.ipynb`.
+Ноутбук уже открыт у меня в редакторе.
 
-## What this repository is
+## Главное правило
+- На каждый мой запрос **добавляй новые ячейки в конец `work.ipynb`**. Других файлов не создавай.
+- **Только дополняй.** Никогда не переписывай, не переставляй и не удаляй существующие ячейки — в них история лекции, она должна оставаться на экране.
+- **Не запускай ноутбук и не выполняй ячейки.** Каждую ячейку я запускаю сам, вручную.
 
-`ydl-2026` is a teaching/lab workspace for the **YDL2026** course (YDL stands for
-**Yessenov Data Lab**). It is used to
-demonstrate Claude Code itself (CLAUDE.md, memory, sessions, MCP, tests) and to
-build small example Python projects during lessons. `day1/plan-lecture.md` is the
-running lecture outline — it describes the demos planned for each session (e.g.
-building a pygame project, writing unit tests, using `/goal`, the Google browser
-MCP plugin). Consult it to understand where a given day's work is heading.
+## Формат ответа в ноутбуке
+- Сначала короткая **markdown-ячейка-заголовок** (моя тема/вопрос). Затем ячейка(и) с кодом.
+- Маленькие ячейки, каждая запускается по порядку и независимо.
+- Каждая кодовая ячейка **заканчивается выводом результата** (`print`, имя переменной, `display()` или `plt.show()`) — студенты должны увидеть ответ.
+- Вывод компактный: `.head()`, ограничивай число строк. Это проектор, не должно растягиваться.
 
-The codebase is intentionally small and grows lesson-by-lesson; do not assume a
-larger architecture exists than what is present on disk.
+## Стиль кода (для новичков)
+- Самый простой идиоматичный pandas/numpy. Без хитрых однострочников и продвинутых трюков.
+- Комментарии короткие, **на русском**, объясняют что и зачем (не как).
+- Данные уже загружены в `df` — **не загружай заново** на каждый вопрос. Опирайся на уже определённые переменные.
+- Понятные имена переменных.
 
-## Environment & running code
+## Отвечай буквально на вопрос — без самодеятельности
+Это важно и намеренно:
+- Делай **ровно то, что спрошено**, самым прямым способом.
+- **Не добавляй** обработку пропусков, проверки, валидацию, предупреждения или «улучшения», если я об этом прямо не попросил.
+- **Не предупреждай** о подводных камнях в данных (пропуски, выбросы, перекосы) — я раскрываю их со студентами сам, вживую. Заботливый агент, который всё чинит заранее, ломает урок.
+- Никаких длинных объяснений в чат. Вся суть — в ноутбуке (код + комментарии). В чат — максимум одна короткая строка.
 
-A Python 3.12 virtualenv lives at `venv/` (it is not on PATH).
+## Данные и окружение
+- Датасеты — встроенные в seaborn: `sns.load_dataset('titanic')` (основной), `sns.load_dataset('flights')` (запасной).
+- Не качай данные из интернета и не скачивай файлы.
+- Не ставь пакеты и не меняй окружение. Доступны: `numpy`, `pandas`, `seaborn`, `matplotlib`.
 
-```bash
-venv/bin/python day1/simple.py     # run a script with the project interpreter
-venv/bin/pip install <package>     # add a dependency (none are pinned yet)
+## Графики
+- `matplotlib`/`seaborn`, один график на ячейку.
+- Обязательно заголовок и подписи осей. Заканчивай `plt.show()`.
+
+## Пример ожидаемого поведения
+Мой промпт: «Were there more men or women on board?»
+
+Ты добавляешь в `work.ipynb`:
+
+*(markdown-ячейка)*
+```
+## Кого больше — мужчин или женщин?
+```
+*(кодовая ячейка)*
+```python
+# считаем, сколько пассажиров каждого пола
+df['sex'].value_counts()
 ```
 
-There is no build, lint, test runner, or dependency manifest configured yet.
-When the lecture plan reaches the testing/pygame demos, expect to introduce
-`pytest` and `pygame` via `venv/bin/pip` and to create the corresponding files.
+Просто, буквально по вопросу, с выводом, без лишних проверок и каузатов.
 
-## External LLM service
 
-`creds.txt` holds API keys for the course's LLM gateway at `https://llm.alem.ai`
-(OpenAI-compatible). Two models are available:
+## Промты я буду брать из файла YDL2026_day2_prompts_all.md или YDL2026_day3_prompts_all.md или другой файл
 
-- `gemma4` — chat completions: `POST /v1/chat/completions`
-- `text-to-image` — image generation: `POST /v1/images/generations`
-
-Both authenticate with `Authorization: Bearer <key>`. These are shared course
-keys, not personal secrets; use them for the LLM/image demos.
-
-## Conventions
-
-- Work is organized by lecture day under `dayN/` directories. New material for a
-  session goes in its own day folder alongside that day's plan and lab PDF.
-
+Не пытайся наперёд обрабатывать эти промпты, я буду запускать каждый промпт отдельно, но ты можешь подглядывать, чтобы понимать контекст
