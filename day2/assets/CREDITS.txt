@@ -1,0 +1,23 @@
+Ассеты для игры day2/runner.py
+==============================
+
+Все ассеты — Kenney (https://kenney.nl), лицензия Creative Commons CC0
+(Public Domain). Указывать авторство не обязательно, использование
+бесплатное в любых целях, включая коммерческие.
+
+Картинки (images/) — из набора "Platformer Art Deluxe":
+  https://kenney.nl/assets/platformer-art-deluxe
+
+Звуки (sounds/) — из набора "Digital Audio":
+  https://kenney.nl/assets/digital-audio
+
+Соответствие файлов:
+  images/player_*.png    <- Base pack / Player (p1)
+  images/coin.png        <- Base pack / Items / coinGold.png
+  images/grass.png       <- Base pack / Tiles / grassMid.png
+  images/enemy_walk.png      <- Extra animations / slime_walk.png
+  images/enemy_squashed.png  <- Extra animations / slime_squashed.png
+  sounds/coin.ogg   <- powerUp1.ogg
+  sounds/jump.ogg   <- phaseJump1.ogg
+  sounds/hurt.ogg   <- lowDown.ogg
+  sounds/stomp.ogg  <- twoTone1.ogg
