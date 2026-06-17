@@ -1,3 +1,4 @@
+.ipynb_checkpoints/
 # Secrets — never commit real keys
 .env
 creds.txt
