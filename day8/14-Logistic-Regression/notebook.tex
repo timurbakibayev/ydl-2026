@@ -1,0 +1,947 @@
+
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{01-Logistic Regression with Python}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \section{Logistic Regression with
+Python}\label{logistic-regression-with-python}
+
+For this lecture we will be working with the
+\href{https://www.kaggle.com/c/titanic}{Titanic Data Set from Kaggle}.
+This is a very famous data set and very often is a student's first step
+in machine learning!
+
+We'll be trying to predict a classification- survival or deceased. Let's
+begin our understanding of implementing Logistic Regression in Python
+for classification.
+
+We'll use a "semi-cleaned" version of the titanic data set, if you use
+the data set hosted directly on Kaggle, you may need to do some
+additional cleaning not shown in this lecture notebook.
+
+\subsection{Import Libraries}\label{import-libraries}
+
+Let's import some libraries to get started!
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}1}]:} \PY{k+kn}{import} \PY{n+nn}{pandas} \PY{k}{as} \PY{n+nn}{pd}
+        \PY{k+kn}{import} \PY{n+nn}{numpy} \PY{k}{as} \PY{n+nn}{np}
+        \PY{k+kn}{import} \PY{n+nn}{matplotlib}\PY{n+nn}{.}\PY{n+nn}{pyplot} \PY{k}{as} \PY{n+nn}{plt}
+        \PY{k+kn}{import} \PY{n+nn}{seaborn} \PY{k}{as} \PY{n+nn}{sns}
+        \PY{o}{\PYZpc{}}\PY{k}{matplotlib} inline
+\end{Verbatim}
+
+
+    \subsection{The Data}\label{the-data}
+
+Let's start by reading in the titanic\_train.csv file into a pandas
+dataframe.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}2}]:} \PY{n}{train} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{read\PYZus{}csv}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{titanic\PYZus{}train.csv}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}3}]:} \PY{n}{train}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}3}]:}    PassengerId  Survived  Pclass  \textbackslash{}
+        0            1         0       3   
+        1            2         1       1   
+        2            3         1       3   
+        3            4         1       1   
+        4            5         0       3   
+        
+                                                        Name     Sex   Age  SibSp  \textbackslash{}
+        0                            Braund, Mr. Owen Harris    male  22.0      1   
+        1  Cumings, Mrs. John Bradley (Florence Briggs Th{\ldots}  female  38.0      1   
+        2                             Heikkinen, Miss. Laina  female  26.0      0   
+        3       Futrelle, Mrs. Jacques Heath (Lily May Peel)  female  35.0      1   
+        4                           Allen, Mr. William Henry    male  35.0      0   
+        
+           Parch            Ticket     Fare Cabin Embarked  
+        0      0         A/5 21171   7.2500   NaN        S  
+        1      0          PC 17599  71.2833   C85        C  
+        2      0  STON/O2. 3101282   7.9250   NaN        S  
+        3      0            113803  53.1000  C123        S  
+        4      0            373450   8.0500   NaN        S  
+\end{Verbatim}
+            
+    \section{Exploratory Data Analysis}\label{exploratory-data-analysis}
+
+Let's begin some exploratory data analysis! We'll start by checking out
+missing data!
+
+\subsection{Missing Data}\label{missing-data}
+
+We can use seaborn to create a simple heatmap to see where we are
+missing data!
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}4}]:} \PY{n}{sns}\PY{o}{.}\PY{n}{heatmap}\PY{p}{(}\PY{n}{train}\PY{o}{.}\PY{n}{isnull}\PY{p}{(}\PY{p}{)}\PY{p}{,}\PY{n}{yticklabels}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,}\PY{n}{cbar}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,}\PY{n}{cmap}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{viridis}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}4}]:} <matplotlib.axes.\_subplots.AxesSubplot at 0x22b5106b908>
+\end{Verbatim}
+            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_6_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Roughly 20 percent of the Age data is missing. The proportion of Age
+missing is likely small enough for reasonable replacement with some form
+of imputation. Looking at the Cabin column, it looks like we are just
+missing too much of that data to do something useful with at a basic
+level. We'll probably drop this later, or change it to another feature
+like "Cabin Known: 1 or 0"
+
+Let's continue on by visualizing some more of the data! Check out the
+video for full explanations over these plots, this code is just to serve
+as reference.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}5}]:} \PY{n}{sns}\PY{o}{.}\PY{n}{set\PYZus{}style}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{whitegrid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{sns}\PY{o}{.}\PY{n}{countplot}\PY{p}{(}\PY{n}{x}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Survived}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{data}\PY{o}{=}\PY{n}{train}\PY{p}{,}\PY{n}{palette}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{viridis}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}5}]:} <matplotlib.axes.\_subplots.AxesSubplot at 0x22b531db048>
+\end{Verbatim}
+            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_8_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}6}]:} \PY{n}{sns}\PY{o}{.}\PY{n}{set\PYZus{}style}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{whitegrid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{sns}\PY{o}{.}\PY{n}{countplot}\PY{p}{(}\PY{n}{x}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Survived}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{hue}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Sex}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{data}\PY{o}{=}\PY{n}{train}\PY{p}{,}\PY{n}{palette}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{viridis}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}6}]:} <matplotlib.axes.\_subplots.AxesSubplot at 0x22b532146d8>
+\end{Verbatim}
+            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_9_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}7}]:} \PY{n}{sns}\PY{o}{.}\PY{n}{set\PYZus{}style}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{whitegrid}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+        \PY{n}{sns}\PY{o}{.}\PY{n}{countplot}\PY{p}{(}\PY{n}{x}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Survived}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{hue}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Pclass}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{data}\PY{o}{=}\PY{n}{train}\PY{p}{,}\PY{n}{palette}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{viridis}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}7}]:} <matplotlib.axes.\_subplots.AxesSubplot at 0x22b5327d908>
+\end{Verbatim}
+            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_10_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}8}]:} \PY{n}{sns}\PY{o}{.}\PY{n}{distplot}\PY{p}{(}\PY{n}{train}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Age}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{dropna}\PY{p}{(}\PY{p}{)}\PY{p}{,}\PY{n}{kde}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,}\PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{darkred}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{bins}\PY{o}{=}\PY{l+m+mi}{30}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+C:\textbackslash{}Users\textbackslash{}admin\textbackslash{}Anaconda3\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}matplotlib\textbackslash{}axes\textbackslash{}\_axes.py:6462: UserWarning: The 'normed' kwarg is deprecated, and has been replaced by the 'density' kwarg.
+  warnings.warn("The 'normed' kwarg is deprecated, and has been "
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}8}]:} <matplotlib.axes.\_subplots.AxesSubplot at 0x22b532eaac8>
+\end{Verbatim}
+            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_11_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}9}]:} \PY{n}{train}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Age}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{hist}\PY{p}{(}\PY{n}{bins}\PY{o}{=}\PY{l+m+mi}{30}\PY{p}{,}\PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{darkred}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{alpha}\PY{o}{=}\PY{l+m+mf}{0.7}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}9}]:} <matplotlib.axes.\_subplots.AxesSubplot at 0x22b532074e0>
+\end{Verbatim}
+            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_12_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}10}]:} \PY{n}{sns}\PY{o}{.}\PY{n}{countplot}\PY{p}{(}\PY{n}{x}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{SibSp}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{data}\PY{o}{=}\PY{n}{train}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}10}]:} <matplotlib.axes.\_subplots.AxesSubplot at 0x22b5340bba8>
+\end{Verbatim}
+            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_13_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}11}]:} \PY{n}{train}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Fare}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{hist}\PY{p}{(}\PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{green}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{bins}\PY{o}{=}\PY{l+m+mi}{100}\PY{p}{,}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{8}\PY{p}{,}\PY{l+m+mi}{4}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}11}]:} <matplotlib.axes.\_subplots.AxesSubplot at 0x22b5351f390>
+\end{Verbatim}
+            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_14_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\subsubsection{Cufflinks for plots}\label{cufflinks-for-plots}
+
+\begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+Let's take a quick moment to show an example of cufflinks!
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}12}]:} \PY{k+kn}{import} \PY{n+nn}{cufflinks} \PY{k}{as} \PY{n+nn}{cf}
+         \PY{n}{cf}\PY{o}{.}\PY{n}{go\PYZus{}offline}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}13}]:} \PY{o}{!}pip install cufflinks
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Requirement already satisfied: cufflinks in c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages (0.17.0)
+Requirement already satisfied: ipywidgets>=7.0.0 in c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages (from cufflinks) (7.2.1)
+Requirement already satisfied: chart-studio>=1.0.0 in c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages (from cufflinks) (1.0.0)
+Requirement already satisfied: pandas>=0.19.2 in c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages (from cufflinks) (0.23.0)
+Requirement already satisfied: six>=1.9.0 in c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages (from cufflinks) (1.11.0)
+Requirement already satisfied: setuptools>=34.4.1 in c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages (from cufflinks) (39.1.0)
+Requirement already satisfied: numpy>=1.9.2 in c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages (from cufflinks) (1.16.4)
+Requirement already satisfied: colorlover>=0.2.1 in c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages (from cufflinks) (0.3.0)
+Requirement already satisfied: plotly>=4.1.1 in c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages (from cufflinks) (4.3.0)
+Requirement already satisfied: ipython>=5.3.0 in c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages (from cufflinks) (6.4.0)
+Requirement already satisfied: retrying>=1.3.3 in c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages (from chart-studio>=1.0.0->cufflinks) (1.3.3)
+Requirement already satisfied: requests in c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages (from chart-studio>=1.0.0->cufflinks) (2.24.0)
+Requirement already satisfied: jedi>=0.10 in c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages (from ipython>=5.3.0->cufflinks) (0.12.0)
+Requirement already satisfied: decorator in c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages (from ipython>=5.3.0->cufflinks) (4.3.0)
+Requirement already satisfied: pygments in c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages (from ipython>=5.3.0->cufflinks) (2.2.0)
+Requirement already satisfied: traitlets>=4.2 in c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages (from ipython>=5.3.0->cufflinks) (4.3.2)
+Requirement already satisfied: colorama in c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages (from ipython>=5.3.0->cufflinks) (0.3.9)
+Requirement already satisfied: simplegeneric>0.8 in c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages (from ipython>=5.3.0->cufflinks) (0.8.1)
+Requirement already satisfied: pickleshare in c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages (from ipython>=5.3.0->cufflinks) (0.7.4)
+Requirement already satisfied: backcall in c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages (from ipython>=5.3.0->cufflinks) (0.1.0)
+Requirement already satisfied: prompt-toolkit<2.0.0,>=1.0.15 in c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages (from ipython>=5.3.0->cufflinks) (1.0.15)
+Requirement already satisfied: ipykernel>=4.5.1 in c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages (from ipywidgets>=7.0.0->cufflinks) (4.8.2)
+Requirement already satisfied: nbformat>=4.2.0 in c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages (from ipywidgets>=7.0.0->cufflinks) (4.4.0)
+Requirement already satisfied: widgetsnbextension\textasciitilde{}=3.2.0 in c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages (from ipywidgets>=7.0.0->cufflinks) (3.2.1)
+Requirement already satisfied: python-dateutil>=2.5.0 in c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages (from pandas>=0.19.2->cufflinks) (2.7.3)
+Requirement already satisfied: pytz>=2011k in c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages (from pandas>=0.19.2->cufflinks) (2018.4)
+Requirement already satisfied: jupyter\_client in c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages (from ipykernel>=4.5.1->ipywidgets>=7.0.0->cufflinks) (5.2.3)
+Requirement already satisfied: tornado>=4.0 in c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages (from ipykernel>=4.5.1->ipywidgets>=7.0.0->cufflinks) (5.0.2)
+Requirement already satisfied: parso>=0.2.0 in c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages (from jedi>=0.10->ipython>=5.3.0->cufflinks) (0.2.0)
+Requirement already satisfied: ipython\_genutils in c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages (from nbformat>=4.2.0->ipywidgets>=7.0.0->cufflinks) (0.2.0)
+Requirement already satisfied: jsonschema!=2.5.0,>=2.4 in c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages (from nbformat>=4.2.0->ipywidgets>=7.0.0->cufflinks) (2.6.0)
+Requirement already satisfied: jupyter\_core in c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages (from nbformat>=4.2.0->ipywidgets>=7.0.0->cufflinks) (4.4.0)
+Requirement already satisfied: wcwidth in c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages (from prompt-toolkit<2.0.0,>=1.0.15->ipython>=5.3.0->cufflinks) (0.1.7)
+Requirement already satisfied: notebook>=4.4.1 in c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages (from widgetsnbextension\textasciitilde{}=3.2.0->ipywidgets>=7.0.0->cufflinks) (5.5.0)
+Requirement already satisfied: idna<3,>=2.5 in c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages (from requests->chart-studio>=1.0.0->cufflinks) (2.6)
+Requirement already satisfied: chardet<4,>=3.0.2 in c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages (from requests->chart-studio>=1.0.0->cufflinks) (3.0.4)
+Requirement already satisfied: certifi>=2017.4.17 in c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages (from requests->chart-studio>=1.0.0->cufflinks) (2019.6.16)
+Requirement already satisfied: urllib3!=1.25.0,!=1.25.1,<1.26,>=1.21.1 in c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages (from requests->chart-studio>=1.0.0->cufflinks) (1.22)
+Requirement already satisfied: Send2Trash in c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages (from notebook>=4.4.1->widgetsnbextension\textasciitilde{}=3.2.0->ipywidgets>=7.0.0->cufflinks) (1.5.0)
+Requirement already satisfied: pyzmq>=17 in c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages (from notebook>=4.4.1->widgetsnbextension\textasciitilde{}=3.2.0->ipywidgets>=7.0.0->cufflinks) (17.0.0)
+Requirement already satisfied: nbconvert in c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages (from notebook>=4.4.1->widgetsnbextension\textasciitilde{}=3.2.0->ipywidgets>=7.0.0->cufflinks) (5.3.1)
+Requirement already satisfied: terminado>=0.8.1 in c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages (from notebook>=4.4.1->widgetsnbextension\textasciitilde{}=3.2.0->ipywidgets>=7.0.0->cufflinks) (0.8.1)
+Requirement already satisfied: jinja2 in c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages (from notebook>=4.4.1->widgetsnbextension\textasciitilde{}=3.2.0->ipywidgets>=7.0.0->cufflinks) (2.10)
+Requirement already satisfied: MarkupSafe>=0.23 in c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages (from jinja2->notebook>=4.4.1->widgetsnbextension\textasciitilde{}=3.2.0->ipywidgets>=7.0.0->cufflinks) (1.0)
+Requirement already satisfied: mistune>=0.7.4 in c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages (from nbconvert->notebook>=4.4.1->widgetsnbextension\textasciitilde{}=3.2.0->ipywidgets>=7.0.0->cufflinks) (0.8.3)
+Requirement already satisfied: entrypoints>=0.2.2 in c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages (from nbconvert->notebook>=4.4.1->widgetsnbextension\textasciitilde{}=3.2.0->ipywidgets>=7.0.0->cufflinks) (0.2.3)
+Requirement already satisfied: bleach in c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages (from nbconvert->notebook>=4.4.1->widgetsnbextension\textasciitilde{}=3.2.0->ipywidgets>=7.0.0->cufflinks) (2.1.3)
+Requirement already satisfied: pandocfilters>=1.4.1 in c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages (from nbconvert->notebook>=4.4.1->widgetsnbextension\textasciitilde{}=3.2.0->ipywidgets>=7.0.0->cufflinks) (1.4.2)
+Requirement already satisfied: testpath in c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages (from nbconvert->notebook>=4.4.1->widgetsnbextension\textasciitilde{}=3.2.0->ipywidgets>=7.0.0->cufflinks) (0.3.1)
+Requirement already satisfied: html5lib!=1.0b1,!=1.0b2,!=1.0b3,!=1.0b4,!=1.0b5,!=1.0b6,!=1.0b7,!=1.0b8,>=0.99999999pre in c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages (from bleach->nbconvert->notebook>=4.4.1->widgetsnbextension\textasciitilde{}=3.2.0->ipywidgets>=7.0.0->cufflinks) (1.0.1)
+Requirement already satisfied: webencodings in c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages (from html5lib!=1.0b1,!=1.0b2,!=1.0b3,!=1.0b4,!=1.0b5,!=1.0b6,!=1.0b7,!=1.0b8,>=0.99999999pre->bleach->nbconvert->notebook>=4.4.1->widgetsnbextension\textasciitilde{}=3.2.0->ipywidgets>=7.0.0->cufflinks) (0.5.1)
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+WARNING: Ignoring invalid distribution -umpy (c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages)
+WARNING: Ignoring invalid distribution -ip (c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages)
+WARNING: Ignoring invalid distribution -cipy (c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages)
+WARNING: Ignoring invalid distribution -umpy (c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages)
+WARNING: Ignoring invalid distribution -ip (c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages)
+WARNING: Ignoring invalid distribution -cipy (c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages)
+WARNING: Ignoring invalid distribution -umpy (c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages)
+WARNING: Ignoring invalid distribution -ip (c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages)
+WARNING: Ignoring invalid distribution -cipy (c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages)
+WARNING: Ignoring invalid distribution -umpy (c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages)
+WARNING: Ignoring invalid distribution -ip (c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages)
+WARNING: Ignoring invalid distribution -cipy (c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages)
+WARNING: Ignoring invalid distribution -umpy (c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages)
+WARNING: Ignoring invalid distribution -ip (c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages)
+WARNING: Ignoring invalid distribution -cipy (c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages)
+WARNING: Ignoring invalid distribution -umpy (c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages)
+WARNING: Ignoring invalid distribution -ip (c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages)
+WARNING: Ignoring invalid distribution -cipy (c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages)
+WARNING: You are using pip version 21.3; however, version 21.3.1 is available.
+You should consider upgrading via the 'c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}python.exe -m pip install --upgrade pip' command.
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}14}]:} \PY{o}{!}python \PYZhy{}m pip install \PYZhy{}\PYZhy{}upgrade pip
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Requirement already satisfied: pip in c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages (21.3)
+Could not fetch URL https://pypi.org/simple/pip/: There was a problem confirming the ssl certificate: HTTPSConnectionPool(host='pypi.org', port=443): Max retries exceeded with url: /simple/pip/ (Caused by SSLError(SSLError(1, '[SSL: CERTIFICATE\_VERIFY\_FAILED] certificate verify failed (\_ssl.c:833)'),)) - skipping
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+WARNING: Ignoring invalid distribution -umpy (c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages)
+WARNING: Ignoring invalid distribution -ip (c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages)
+WARNING: Ignoring invalid distribution -cipy (c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages)
+WARNING: Ignoring invalid distribution -umpy (c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages)
+WARNING: Ignoring invalid distribution -ip (c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages)
+WARNING: Ignoring invalid distribution -cipy (c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages)
+WARNING: Retrying (Retry(total=4, connect=None, read=None, redirect=None, status=None)) after connection broken by 'SSLError(SSLError(1, '[SSL: CERTIFICATE\_VERIFY\_FAILED] certificate verify failed (\_ssl.c:833)'),)': /simple/pip/
+WARNING: Retrying (Retry(total=3, connect=None, read=None, redirect=None, status=None)) after connection broken by 'SSLError(SSLError(1, '[SSL: CERTIFICATE\_VERIFY\_FAILED] certificate verify failed (\_ssl.c:833)'),)': /simple/pip/
+WARNING: Retrying (Retry(total=2, connect=None, read=None, redirect=None, status=None)) after connection broken by 'SSLError(SSLError(1, '[SSL: CERTIFICATE\_VERIFY\_FAILED] certificate verify failed (\_ssl.c:833)'),)': /simple/pip/
+WARNING: Retrying (Retry(total=1, connect=None, read=None, redirect=None, status=None)) after connection broken by 'SSLError(SSLError(1, '[SSL: CERTIFICATE\_VERIFY\_FAILED] certificate verify failed (\_ssl.c:833)'),)': /simple/pip/
+WARNING: Retrying (Retry(total=0, connect=None, read=None, redirect=None, status=None)) after connection broken by 'SSLError(SSLError(1, '[SSL: CERTIFICATE\_VERIFY\_FAILED] certificate verify failed (\_ssl.c:833)'),)': /simple/pip/
+WARNING: Ignoring invalid distribution -umpy (c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages)
+WARNING: Ignoring invalid distribution -ip (c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages)
+WARNING: Ignoring invalid distribution -cipy (c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages)
+WARNING: Ignoring invalid distribution -umpy (c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages)
+WARNING: Ignoring invalid distribution -ip (c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages)
+WARNING: Ignoring invalid distribution -cipy (c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages)
+WARNING: Ignoring invalid distribution -umpy (c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages)
+WARNING: Ignoring invalid distribution -ip (c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages)
+WARNING: Ignoring invalid distribution -cipy (c:\textbackslash{}users\textbackslash{}admin\textbackslash{}anaconda3\textbackslash{}lib\textbackslash{}site-packages)
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}15}]:} \PY{n}{train}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Fare}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{iplot}\PY{p}{(}\PY{n}{kind}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{hist}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{bins}\PY{o}{=}\PY{l+m+mi}{100}\PY{p}{,}\PY{n}{color}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{green}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    
+    \begin{center}\rule{0.5\linewidth}{\linethickness}\end{center}
+
+\subsection{Data Cleaning}\label{data-cleaning}
+
+We want to fill in missing age data instead of just dropping the missing
+age data rows. One way to do this is by filling in the mean age of all
+the passengers (imputation). However we can be smarter about this and
+check the average age by passenger class. For example:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}16}]:} \PY{n}{plt}\PY{o}{.}\PY{n}{figure}\PY{p}{(}\PY{n}{figsize}\PY{o}{=}\PY{p}{(}\PY{l+m+mi}{12}\PY{p}{,} \PY{l+m+mi}{7}\PY{p}{)}\PY{p}{)}
+         \PY{n}{sns}\PY{o}{.}\PY{n}{boxplot}\PY{p}{(}\PY{n}{x}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Pclass}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{y}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Age}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{data}\PY{o}{=}\PY{n}{train}\PY{p}{,}\PY{n}{palette}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{winter}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}16}]:} <matplotlib.axes.\_subplots.AxesSubplot at 0x22b582c2860>
+\end{Verbatim}
+            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_21_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    We can see the wealthier passengers in the higher classes tend to be
+older, which makes sense. We'll use these average age values to impute
+based on Pclass for Age.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}17}]:} \PY{k}{def} \PY{n+nf}{impute\PYZus{}age}\PY{p}{(}\PY{n}{cols}\PY{p}{)}\PY{p}{:}
+             \PY{n}{Age} \PY{o}{=} \PY{n}{cols}\PY{p}{[}\PY{l+m+mi}{0}\PY{p}{]}
+             \PY{n}{Pclass} \PY{o}{=} \PY{n}{cols}\PY{p}{[}\PY{l+m+mi}{1}\PY{p}{]}
+             
+             \PY{k}{if} \PY{n}{pd}\PY{o}{.}\PY{n}{isnull}\PY{p}{(}\PY{n}{Age}\PY{p}{)}\PY{p}{:}
+         
+                 \PY{k}{if} \PY{n}{Pclass} \PY{o}{==} \PY{l+m+mi}{1}\PY{p}{:}
+                     \PY{k}{return} \PY{l+m+mi}{37}
+         
+                 \PY{k}{elif} \PY{n}{Pclass} \PY{o}{==} \PY{l+m+mi}{2}\PY{p}{:}
+                     \PY{k}{return} \PY{l+m+mi}{29}
+         
+                 \PY{k}{else}\PY{p}{:}
+                     \PY{k}{return} \PY{l+m+mi}{24}
+         
+             \PY{k}{else}\PY{p}{:}
+                 \PY{k}{return} \PY{n}{Age}
+\end{Verbatim}
+
+
+    Now apply that function!
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}18}]:} \PY{n}{train}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Age}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]} \PY{o}{=} \PY{n}{train}\PY{p}{[}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Age}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Pclass}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{]}\PY{o}{.}\PY{n}{apply}\PY{p}{(}\PY{n}{impute\PYZus{}age}\PY{p}{,}\PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+\end{Verbatim}
+
+
+    Now let's check that heat map again!
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}19}]:} \PY{n}{sns}\PY{o}{.}\PY{n}{heatmap}\PY{p}{(}\PY{n}{train}\PY{o}{.}\PY{n}{isnull}\PY{p}{(}\PY{p}{)}\PY{p}{,}\PY{n}{yticklabels}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,}\PY{n}{cbar}\PY{o}{=}\PY{k+kc}{False}\PY{p}{,}\PY{n}{cmap}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{viridis}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}19}]:} <matplotlib.axes.\_subplots.AxesSubplot at 0x22b5837f908>
+\end{Verbatim}
+            
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_27_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Great! Let's go ahead and drop the Cabin column and the row in Embarked
+that is NaN.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}20}]:} \PY{n}{train}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Cabin}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{inplace}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}21}]:} \PY{n}{train}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}21}]:}    PassengerId  Survived  Pclass  \textbackslash{}
+         0            1         0       3   
+         1            2         1       1   
+         2            3         1       3   
+         3            4         1       1   
+         4            5         0       3   
+         
+                                                         Name     Sex   Age  SibSp  \textbackslash{}
+         0                            Braund, Mr. Owen Harris    male  22.0      1   
+         1  Cumings, Mrs. John Bradley (Florence Briggs Th{\ldots}  female  38.0      1   
+         2                             Heikkinen, Miss. Laina  female  26.0      0   
+         3       Futrelle, Mrs. Jacques Heath (Lily May Peel)  female  35.0      1   
+         4                           Allen, Mr. William Henry    male  35.0      0   
+         
+            Parch            Ticket     Fare Embarked  
+         0      0         A/5 21171   7.2500        S  
+         1      0          PC 17599  71.2833        C  
+         2      0  STON/O2. 3101282   7.9250        S  
+         3      0            113803  53.1000        S  
+         4      0            373450   8.0500        S  
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}22}]:} \PY{n}{train}\PY{o}{.}\PY{n}{dropna}\PY{p}{(}\PY{n}{inplace}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsection{Converting Categorical
+Features}\label{converting-categorical-features}
+
+We'll need to convert categorical features to dummy variables using
+pandas! Otherwise our machine learning algorithm won't be able to
+directly take in those features as inputs.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}23}]:} \PY{n}{train}\PY{o}{.}\PY{n}{info}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+<class 'pandas.core.frame.DataFrame'>
+Int64Index: 889 entries, 0 to 890
+Data columns (total 11 columns):
+PassengerId    889 non-null int64
+Survived       889 non-null int64
+Pclass         889 non-null int64
+Name           889 non-null object
+Sex            889 non-null object
+Age            889 non-null float64
+SibSp          889 non-null int64
+Parch          889 non-null int64
+Ticket         889 non-null object
+Fare           889 non-null float64
+Embarked       889 non-null object
+dtypes: float64(2), int64(5), object(4)
+memory usage: 83.3+ KB
+
+    \end{Verbatim}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}24}]:} \PY{n}{train}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Embarked}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{o}{.}\PY{n}{unique}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}24}]:} array(['S', 'C', 'Q'], dtype=object)
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}25}]:} \PY{n}{sex} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{get\PYZus{}dummies}\PY{p}{(}\PY{n}{train}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Sex}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,}\PY{n}{drop\PYZus{}first}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+         \PY{n}{embark} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{get\PYZus{}dummies}\PY{p}{(}\PY{n}{train}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Embarked}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,}\PY{n}{drop\PYZus{}first}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}26}]:} \PY{n}{sex}\PY{p}{[}\PY{p}{:}\PY{l+m+mi}{5}\PY{p}{]}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}26}]:}    male
+         0     1
+         1     0
+         2     0
+         3     0
+         4     1
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}27}]:} \PY{n}{embark}\PY{p}{[}\PY{p}{:}\PY{l+m+mi}{5}\PY{p}{]}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}27}]:}    Q  S
+         0  0  1
+         1  0  0
+         2  0  1
+         3  0  1
+         4  0  1
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}28}]:} \PY{n}{train}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Sex}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Embarked}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Name}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Ticket}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,}\PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{,}\PY{n}{inplace}\PY{o}{=}\PY{k+kc}{True}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}29}]:} \PY{n}{train} \PY{o}{=} \PY{n}{pd}\PY{o}{.}\PY{n}{concat}\PY{p}{(}\PY{p}{[}\PY{n}{train}\PY{p}{,}\PY{n}{sex}\PY{p}{,}\PY{n}{embark}\PY{p}{]}\PY{p}{,}\PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}30}]:} \PY{n}{train}\PY{o}{.}\PY{n}{head}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}30}]:}    PassengerId  Survived  Pclass   Age  SibSp  Parch     Fare  male  Q  S
+         0            1         0       3  22.0      1      0   7.2500     1  0  1
+         1            2         1       1  38.0      1      0  71.2833     0  0  0
+         2            3         1       3  26.0      0      0   7.9250     0  0  1
+         3            4         1       1  35.0      1      0  53.1000     0  0  1
+         4            5         0       3  35.0      0      0   8.0500     1  0  1
+\end{Verbatim}
+            
+    Great! Our data is ready for our model!
+
+\section{Building a Logistic Regression
+model}\label{building-a-logistic-regression-model}
+
+Let's start by splitting our data into a training set and test set
+(there is another test.csv file that you can play around with in case
+you want to use all this data for training).
+
+\subsection{Train Test Split}\label{train-test-split}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}31}]:} \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{model\PYZus{}selection} \PY{k}{import} \PY{n}{train\PYZus{}test\PYZus{}split}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}32}]:} \PY{n}{X\PYZus{}train}\PY{p}{,} \PY{n}{X\PYZus{}test}\PY{p}{,} \PY{n}{y\PYZus{}train}\PY{p}{,} \PY{n}{y\PYZus{}test} \PY{o}{=} \PY{n}{train\PYZus{}test\PYZus{}split}\PY{p}{(}\PY{n}{train}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Survived}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}\PY{n}{axis}\PY{o}{=}\PY{l+m+mi}{1}\PY{p}{)}\PY{p}{,} 
+                                                             \PY{n}{train}\PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Survived}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}\PY{p}{,} \PY{n}{test\PYZus{}size}\PY{o}{=}\PY{l+m+mf}{0.30}\PY{p}{,} 
+                                                             \PY{n}{random\PYZus{}state}\PY{o}{=}\PY{l+m+mi}{101}\PY{p}{)}
+\end{Verbatim}
+
+
+    \subsection{Training and Predicting}\label{training-and-predicting}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}33}]:} \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{linear\PYZus{}model} \PY{k}{import} \PY{n}{LogisticRegression}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}34}]:} \PY{n}{logmodel} \PY{o}{=} \PY{n}{LogisticRegression}\PY{p}{(}\PY{p}{)}
+         \PY{n}{logmodel}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{X\PYZus{}train}\PY{p}{,}\PY{n}{y\PYZus{}train}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+C:\textbackslash{}Users\textbackslash{}admin\textbackslash{}Anaconda3\textbackslash{}lib\textbackslash{}site-packages\textbackslash{}sklearn\textbackslash{}linear\_model\textbackslash{}logistic.py:433: FutureWarning:
+
+Default solver will be changed to 'lbfgs' in 0.22. Specify a solver to silence this warning.
+
+
+    \end{Verbatim}
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}34}]:} LogisticRegression(C=1.0, class\_weight=None, dual=False, fit\_intercept=True,
+                   intercept\_scaling=1, max\_iter=100, multi\_class='warn',
+                   n\_jobs=None, penalty='l2', random\_state=None, solver='warn',
+                   tol=0.0001, verbose=0, warm\_start=False)
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}35}]:} \PY{n}{predictions} \PY{o}{=} \PY{n}{logmodel}\PY{o}{.}\PY{n}{predict}\PY{p}{(}\PY{n}{X\PYZus{}test}\PY{p}{)}
+\end{Verbatim}
+
+
+    Let's move on to evaluate our model!
+
+    \subsection{Evaluation}\label{evaluation}
+
+    We can check precision,recall,f1-score using classification report!
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}36}]:} \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{metrics} \PY{k}{import} \PY{n}{classification\PYZus{}report}
+         \PY{k+kn}{from} \PY{n+nn}{sklearn}\PY{n+nn}{.}\PY{n+nn}{metrics} \PY{k}{import} \PY{n}{confusion\PYZus{}matrix}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}37}]:} \PY{n}{confusion\PYZus{}matrix}\PY{p}{(}\PY{n}{y\PYZus{}test}\PY{p}{,}\PY{n}{predictions}\PY{p}{)}
+\end{Verbatim}
+
+
+\begin{Verbatim}[commandchars=\\\{\}]
+{\color{outcolor}Out[{\color{outcolor}37}]:} array([[151,  12],
+                [ 36,  68]], dtype=int64)
+\end{Verbatim}
+            
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}38}]:} \PY{n+nb}{print}\PY{p}{(}\PY{n}{classification\PYZus{}report}\PY{p}{(}\PY{n}{y\PYZus{}test}\PY{p}{,}\PY{n}{predictions}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+              precision    recall  f1-score   support
+
+           0       0.81      0.93      0.86       163
+           1       0.85      0.65      0.74       104
+
+   micro avg       0.82      0.82      0.82       267
+   macro avg       0.83      0.79      0.80       267
+weighted avg       0.82      0.82      0.81       267
+
+
+    \end{Verbatim}
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
